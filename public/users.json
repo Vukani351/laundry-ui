@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Sarah Johnson",
+    "email": "owner@laundry.com",
+    "password": "password",
+    "role": "owner"
+  },
+  {
+    "id": "2",
+    "name": "John Smith",
+    "email": "client@laundry.com",
+    "password": "password",
+    "role": "client"
+  }
+]
