@@ -13,14 +13,16 @@ interface EditLaundryItemDialogProps {
   item: LaundryItem;
   isNew?: Boolean;
   trigger: React.ReactNode;
+  onVerifyPhoneNumber: (userNumber: string) => any; // change this to be user details
   onSave: (updatedItem: LaundryItem) => void;
 }
 
-export const EditLaundryItemDialog = ({ item, onSave, trigger, isNew = false }: EditLaundryItemDialogProps) => {
+export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigger, isNew = false }: EditLaundryItemDialogProps) => {
   const [open, setOpen] = useState(false);
   const [modelTitle, setModelTitle] = useState("");
   const [formData, setFormData] = useState({
     clientName: item.clientName,
+    clientNumber: item.clientNumber,
     weight: item.weight.toString(),
     status: item.status,
     isPaid: item.isPaid,
@@ -32,6 +34,7 @@ export const EditLaundryItemDialog = ({ item, onSave, trigger, isNew = false }: 
     const updatedItem: LaundryItem = {
       ...item,
       clientName: formData.clientName,
+      clientNumber: formData.clientNumber,
       weight: parseFloat(formData.weight) || 0,
       status: formData.status as LaundryStatus,
       isPaid: formData.isPaid,
@@ -67,6 +70,18 @@ export const EditLaundryItemDialog = ({ item, onSave, trigger, isNew = false }: 
             {modelTitle}
           </DialogTitle>
         </DialogHeader>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="clientNumber" className="text-right">
+            Client Number
+          </Label>
+          <Input
+            id="clientNumber"
+            value={formData.clientNumber}
+            onBlur={(e) => onVerifyPhoneNumber(e.target.value)}
+            onChange={(e) => setFormData({ ...formData, clientNumber: e.target.value })}
+            className="col-span-3"
+          />
+        </div>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="clientName" className="text-right">
@@ -172,4 +187,5 @@ export const EditLaundryItemDialog = ({ item, onSave, trigger, isNew = false }: 
 * Todo
 * add be prop to take in if item is new or being edited. 
 * take new laundry item owner number kqala - check for the user in the db, n return their data or nothing.
+* fill in the rest of the details and send it up to parent, 
 */ 

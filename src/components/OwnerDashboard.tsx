@@ -48,7 +48,7 @@ export const OwnerDashboard = () => {
     id: "",
     weight: 0,
     adminId: "",
-    clientId: "", // this should get the user number to assign.
+    clientId: "",
     isPaid: false,
     totalAmount: 0,
     clientName: "",
@@ -64,7 +64,14 @@ export const OwnerDashboard = () => {
 
   function onEdit(updatedItem: LaundryItem): void {
     console.log("open the item...", updatedItem)
-    throw new Error('Function not implemented.');
+  }
+
+  function onNewLaundryItem(updatedItem: LaundryItem): void {
+    console.log("adding new item...", updatedItem)
+  }
+
+  function verifyUserPhone(phoneNumber: string): void {
+    console.log("adding new item... ", phoneNumber)
   }
 
   return (
@@ -166,7 +173,8 @@ export const OwnerDashboard = () => {
                   Active Laundry Orders
                   <EditLaundryItemDialog
                     item={newLaundryItemDetails}
-                    onSave={onEdit}
+                    onSave={onNewLaundryItem}
+                    onVerifyPhoneNumber={verifyUserPhone}
                     isNew={true}
                     trigger={newLaundryItem}
                   />
