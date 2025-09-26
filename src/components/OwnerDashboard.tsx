@@ -67,7 +67,7 @@ export const OwnerDashboard = () => {
   }
 
   function onNewLaundryItem(updatedItem: LaundryItem): void {
-    console.log("adding new item...", updatedItem)
+    console.log("adding new item... ", updatedItem)
   }
 
   function verifyUserPhone(phoneNumber: string): void {

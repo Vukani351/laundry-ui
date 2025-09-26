@@ -9,7 +9,8 @@ export const mockLaundryItems: LaundryItem[] = [
     status: 'washing',
     isPaid: false,
     dateCreated: new Date('2024-01-15T09:00:00Z'),
-    totalAmount: 15.60
+    totalAmount: 15.60,
+    adminId: ''
   },
   {
     id: '2',
@@ -19,7 +20,8 @@ export const mockLaundryItems: LaundryItem[] = [
     status: 'drying',
     isPaid: true,
     dateCreated: new Date('2024-01-15T10:30:00Z'),
-    totalAmount: 11.40
+    totalAmount: 11.40,
+    adminId: ''
   },
   {
     id: '3',
@@ -29,7 +31,8 @@ export const mockLaundryItems: LaundryItem[] = [
     status: 'ready',
     isPaid: false,
     dateCreated: new Date('2024-01-15T08:15:00Z'),
-    totalAmount: 21.30
+    totalAmount: 21.30,
+    adminId: ''
   },
   {
     id: '4',
@@ -40,7 +43,8 @@ export const mockLaundryItems: LaundryItem[] = [
     isPaid: true,
     dateCreated: new Date('2024-01-14T15:20:00Z'),
     dateCompleted: new Date('2024-01-15T12:00:00Z'),
-    totalAmount: 13.50
+    totalAmount: 13.50,
+    adminId: ''
   },
   {
     id: '5',
@@ -50,7 +54,8 @@ export const mockLaundryItems: LaundryItem[] = [
     status: 'washing',
     isPaid: false,
     dateCreated: new Date('2024-01-15T11:45:00Z'),
-    totalAmount: 18.90
+    totalAmount: 18.90,
+    adminId: ''
   },
   {
     id: '6',
@@ -60,6 +65,7 @@ export const mockLaundryItems: LaundryItem[] = [
     status: 'drying',
     isPaid: true,
     dateCreated: new Date('2024-01-14T16:00:00Z'),
-    totalAmount: 8.70
+    totalAmount: 8.70,
+    adminId: ''
   }
 ];
