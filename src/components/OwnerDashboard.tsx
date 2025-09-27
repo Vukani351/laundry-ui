@@ -11,11 +11,17 @@ import { mockLaundryItems } from '@/data/mockData';
 import { LogOut, TrendingUp, DollarSign, Clock, CheckCircle, Settings, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { EditLaundryItemDialog } from './EditLaundryItemDialog';
+import { useLaundryStore } from '@/hooks/useLaundryStore';
 
 export const OwnerDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [laundryItems, setLaundryItems] = useState<LaundryItem[]>(mockLaundryItems);
+  const {
+    laundries,
+    isLoading,
+    fetchUserDataByNumber
+  } = useLaundryStore();
 
   const handleStatusChange = (itemId: string, status: LaundryStatus) => {
     setLaundryItems(prev => prev.map(item =>
@@ -38,7 +44,7 @@ export const OwnerDashboard = () => {
 
   const todayRevenue = laundryItems
     .filter(item => item.isPaid && new Date(item.dateCreated).toDateString() === new Date().toDateString())
-    .reduce((sum, item) => sum + item.totalAmount, 0);
+    .reduce((sum, item) => sum + item.price, 0);
 
   const washingCount = laundryItems.filter(item => item.status === 'washing').length;
   const dryingCount = laundryItems.filter(item => item.status === 'drying').length;
@@ -50,7 +56,7 @@ export const OwnerDashboard = () => {
     adminId: "",
     clientId: "",
     isPaid: false,
-    totalAmount: 0,
+    price: 0,
     clientName: "",
     clientNumber: "",
     status: "not started",
@@ -71,6 +77,7 @@ export const OwnerDashboard = () => {
   }
 
   function verifyUserPhone(phoneNumber: string): void {
+    fetchUserDataByNumber(phoneNumber)
     console.log("adding new item... ", phoneNumber)
   }
 
@@ -176,6 +183,7 @@ export const OwnerDashboard = () => {
                     onSave={onNewLaundryItem}
                     onVerifyPhoneNumber={verifyUserPhone}
                     isNew={true}
+                    isLoading={isLoading}
                     trigger={newLaundryItem}
                   />
                 </CardTitle>

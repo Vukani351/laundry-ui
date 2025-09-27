@@ -40,9 +40,9 @@ export const ClientDashboard = () => {
 
   const totalSpent = laundryItems
     .filter(item => item.isPaid)
-    .reduce((sum, item) => sum + item.totalAmount, 0);
+    .reduce((sum, item) => sum + item.price, 0);
 
-  const pendingAmount = unpaidItems.reduce((sum, item) => sum + item.totalAmount, 0);
+  const pendingAmount = unpaidItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <div className="min-h-screen bg-background">

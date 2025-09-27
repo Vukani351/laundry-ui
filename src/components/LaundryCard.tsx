@@ -51,7 +51,7 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
           </Badge>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -60,10 +60,10 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <DollarSign className="w-4 h-4" />
-            <span>${item.totalAmount.toFixed(2)}</span>
+            <span>${item.price.toFixed(2)}</span>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="w-4 h-4" />
           <span>Started {formatDistanceToNow(item.dateCreated, { addSuffix: true })}</span>
@@ -81,10 +81,10 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
               </Badge>
             )}
           </div>
-          
+
           {userRole === 'owner' && onStatusChange && (
-            <Select 
-              value={item.status} 
+            <Select
+              value={item.status}
               onValueChange={(value) => onStatusChange(item.id, value as LaundryStatus)}
             >
               <SelectTrigger className="w-32">
@@ -97,10 +97,10 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
               </SelectContent>
             </Select>
           )}
-          
+
           {userRole === 'client' && !item.isPaid && item.status === 'ready' && onPayment && (
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               onClick={() => onPayment(item.id)}
               className="bg-success hover:bg-success/90"
             >

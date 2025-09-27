@@ -17,7 +17,7 @@ export interface LaundryItem {
   isPaid: boolean;
   dateCreated: Date;
   dateCompleted?: Date;
-  totalAmount: number;
+  price: number;
 }
 
 export type LaundryStatus = 'washing' | 'drying' | 'ready' | 'not started';
