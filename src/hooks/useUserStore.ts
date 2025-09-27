@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { User } from '@/types/laundry';
+import axios from 'axios';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 interface UserStore {
   users: User[];
   currentUser: User | null;
@@ -22,10 +24,13 @@ export const useUserStore = create<UserStore>()(
       currentUser: null,
       isLoading: false,
 
+      fetchUserDataByNumber: async (phone: string) => {
+        axios.get(`${BASE_URL}user`)
+      },
+
       loadUsers: async () => {
         const { users, isLoading } = get();
 
-        // Prevent multiple simultaneous loads
         if (isLoading || users.length > 0) return;
 
         set({ isLoading: true });

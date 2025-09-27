@@ -12,12 +12,13 @@ import { CalendarIcon, SaveIcon } from 'lucide-react';
 interface EditLaundryItemDialogProps {
   item: LaundryItem;
   isNew?: Boolean;
+  isLoading?: boolean;
   trigger: React.ReactNode;
   onVerifyPhoneNumber: (userNumber: string) => any; // change this to be user details
   onSave: (updatedItem: LaundryItem) => void;
 }
 
-export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigger, isNew = false }: EditLaundryItemDialogProps) => {
+export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigger, isLoading, isNew = false }: EditLaundryItemDialogProps) => {
   const [open, setOpen] = useState(false);
   const [modelTitle, setModelTitle] = useState("");
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
     weight: item.weight.toString(),
     status: item.status,
     isPaid: item.isPaid,
-    totalAmount: item.totalAmount.toString(),
+    price: item.price.toString(),
     dateCompleted: item.dateCompleted ? item.dateCompleted.toISOString().split('T')[0] : ''
   });
 
@@ -38,7 +39,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
       weight: parseFloat(formData.weight) || 0,
       status: formData.status as LaundryStatus,
       isPaid: formData.isPaid,
-      totalAmount: parseFloat(formData.totalAmount) || 0,
+      price: parseFloat(formData.price) || 0,
       dateCompleted: formData.dateCompleted ? new Date(formData.dateCompleted) : undefined
     };
 
@@ -90,6 +91,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
             <Input
               id="clientName"
               value={formData.clientName}
+              disabled={isLoading}
               onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
               className="col-span-3"
             />
@@ -104,6 +106,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
               type="number"
               step="0.1"
               value={formData.weight}
+              disabled={isLoading}
               onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
               className="col-span-3"
             />
@@ -126,15 +129,16 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="totalAmount" className="text-right">
+            <Label htmlFor="price" className="text-right">
               Total Amount ($)
             </Label>
             <Input
-              id="totalAmount"
+              id="price"
               type="number"
               step="0.01"
-              value={formData.totalAmount}
-              onChange={(e) => setFormData({ ...formData, totalAmount: e.target.value })}
+              disabled={isLoading}
+              value={formData.price}
+              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
               className="col-span-3"
             />
           </div>
@@ -146,6 +150,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
             <Input
               id="dateCompleted"
               type="date"
+              disabled={isLoading}
               value={formData.dateCompleted}
               onChange={(e) => setFormData({ ...formData, dateCompleted: e.target.value })}
               className="col-span-3"
