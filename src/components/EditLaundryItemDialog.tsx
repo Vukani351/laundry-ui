@@ -51,14 +51,18 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
     });
   };
 
+  const verifyPhone = async (phoneNumber: string) => {
+    const clientName = await onVerifyPhoneNumber(phoneNumber);
+    setFormData({ ...formData, clientName: clientName });
+  }
+
   useEffect(() => {
     if (!isNew) {
       setModelTitle("Edit Laundry Item")
     } else {
       setModelTitle("New Laundry Item")
     }
-  }, [])
-
+  }, []);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -78,7 +82,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
           <Input
             id="clientNumber"
             value={formData.clientNumber}
-            onBlur={(e) => onVerifyPhoneNumber(e.target.value)}
+            onBlur={(e) => verifyPhone(e.target.value)}
             onChange={(e) => setFormData({ ...formData, clientNumber: e.target.value })}
             className="col-span-3"
           />
@@ -90,7 +94,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
             </Label>
             <Input
               id="clientName"
-              value={formData.clientName}
+              value={formData.clientName || item.clientName}
               disabled={isLoading}
               onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
               className="col-span-3"

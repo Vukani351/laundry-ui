@@ -57,7 +57,7 @@ export const OwnerDashboard = () => {
     clientId: "",
     isPaid: false,
     price: 0,
-    clientName: "",
+    clientName: "new user",
     clientNumber: "",
     status: "not started",
     dateCreated: new Date(),
@@ -76,9 +76,10 @@ export const OwnerDashboard = () => {
     console.log("adding new item... ", updatedItem)
   }
 
-  function verifyUserPhone(phoneNumber: string): void {
-    fetchUserDataByNumber(phoneNumber)
-    console.log("adding new item... ", phoneNumber)
+  async function verifyUserPhone(phoneNumber: string): Promise<string> {
+    const userData = await fetchUserDataByNumber(phoneNumber);
+    if (!userData) return;
+    return userData.name;
   }
 
   return (
@@ -179,10 +180,10 @@ export const OwnerDashboard = () => {
                 <CardTitle className='flex justify-between'>
                   Active Laundry Orders
                   <EditLaundryItemDialog
+                    isNew
                     item={newLaundryItemDetails}
                     onSave={onNewLaundryItem}
                     onVerifyPhoneNumber={verifyUserPhone}
-                    isNew={true}
                     isLoading={isLoading}
                     trigger={newLaundryItem}
                   />

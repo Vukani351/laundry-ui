@@ -24,10 +24,6 @@ export const useUserStore = create<UserStore>()(
       currentUser: null,
       isLoading: false,
 
-      fetchUserDataByNumber: async (phone: string) => {
-        axios.get(`${BASE_URL}user`)
-      },
-
       loadUsers: async () => {
         const { users, isLoading } = get();
 

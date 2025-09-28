@@ -7,8 +7,9 @@ const BASE_URL = `${import.meta.env.VITE_BASE_URL}/users`;
 
 interface laundryStore {
   isLoading: boolean;
+  // laundryItemOwner: User;
   laundries: LaundryItem[];
-  fetchUserDataByNumber: (phone: string) => Promise<void>;
+  fetchUserDataByNumber: (phone: string) => Promise<User | null>;
 }
 
 export const useLaundryStore = create<laundryStore>()(
@@ -17,13 +18,17 @@ export const useLaundryStore = create<laundryStore>()(
       isLoading: false,
       laundries: [],
 
-      fetchUserDataByNumber: async (phone: string) => {
+      fetchUserDataByNumber: async (phone: string): Promise<User | null> => {
         set({ isLoading: true });
-        axios.get(`${BASE_URL}/phone/${phone}`).then(resp => {
-          console.log("Data: ", resp);
-        }).finally(() => {
+        try {
+          return await axios.get(`${BASE_URL}/phone/${phone}`).then(resp => {
+            return { ...resp.data, name: resp.data.username };
+          });
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
           set({ isLoading: false });
-        });
+        }
       },
 
     }),
@@ -31,7 +36,8 @@ export const useLaundryStore = create<laundryStore>()(
       name: 'laundry-store',
       partialize: (state) => ({
         laundries: state.laundries,
-        isLoading: state.isLoading
+        isLoading: state.isLoading,
+        // laundryItemOwner: state.laundryItemOwner
       })
     })
 );
