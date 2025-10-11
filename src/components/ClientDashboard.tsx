@@ -15,7 +15,7 @@ export const ClientDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [laundryItems, setLaundryItems] = useState<LaundryItem[]>(
-    mockLaundryItems.filter(item => item.clientId === user?.id || item.clientName === user?.name)
+    mockLaundryItems.filter(item => item.clientId === user?.id || item.clientName === user?.username)
   );
 
   const handlePayment = (itemId: string) => {
@@ -50,7 +50,7 @@ export const ClientDashboard = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">My Laundry</h1>
-            <p className="text-white/80 mt-1">Welcome back, {user?.name}</p>
+            <p className="text-white/80 mt-1">Welcome back, {user?.username}</p>
           </div>
           <div className="flex items-center gap-2">
             <Button

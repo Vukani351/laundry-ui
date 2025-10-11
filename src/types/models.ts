@@ -1,8 +1,8 @@
 export interface User {
   id: string;
-  name: string;
+  username: string;
   email: string;
-  // password: string;
+  address?: string;
   phone: string; // todo: turn this to not be optional
   role: 'owner' | 'client';
 }

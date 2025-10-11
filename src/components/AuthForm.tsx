@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
 import { Loader2, Droplets } from 'lucide-react';
+import { Role } from '@/types/models';
 
 export const AuthForm = () => {
   const { login, register } = useAuth();
@@ -20,16 +21,16 @@ export const AuthForm = () => {
   const [registerName, setRegisterName] = useState('');
   const [registerPhone, setRegisterPhone] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
-  const [registerRole, setRegisterRole] = useState<'owner' | 'client'>('client');
+  const [registerRole, setRegisterRole] = useState<Role>(Role.CLIENT);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await login(loginFullName, loginPhone);
+      const username = (await login(loginFullName, loginPhone))?.username;
       toast({
-        title: "Welcome back!",
+        title: `Welcome back! ${username}`,
         description: "You have successfully logged in.",
       });
     } catch (error) {
@@ -162,7 +163,7 @@ export const AuthForm = () => {
                       <Label>Account Type</Label>
                       <RadioGroup
                         value={registerRole}
-                        onValueChange={(value) => setRegisterRole(value as 'owner' | 'client')}
+                        onValueChange={(value) => setRegisterRole(value as Role)}
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="client" id="client" />
