@@ -1,42 +1,41 @@
 import { useEffect } from 'react';
-import { User } from '@/types/laundry';
+import { Role, User } from '@/types/models';
 import { useUserStore } from './useUserStore';
 
 export const useAuth = () => {
-  const { 
-    currentUser: user, 
-    isLoading, 
-    loadUsers, 
-    login: storeLogin, 
-    logout: storeLogout, 
-    addUser, 
+  const {
+    currentUser: user,
+    isLoading,
+    // loadUsers,
+    login: storeLogin,
+    logout: storeLogout,
+    RegisterUser,
     setCurrentUser,
-    users
+    // users
   } = useUserStore();
 
-  useEffect(() => {
-    if (users.length === 0 && !isLoading) {
-      loadUsers();
-    }
-  }, [users.length, isLoading, loadUsers]);
+  // useEffect(() => {
+  //   if (users.length === 0 && !isLoading) {
+  //     // loadUsers();
+  //   }
+  // }, [users.length, isLoading]);
 
-  const login = async (email: string, password: string): Promise<User> => {
+  const login = async (firstname: string, phone: string): Promise<User> => {
     try {
-      const user = await storeLogin(email, password);
+      console.log("login data: ", { firstname, phone, lastname: "" })
+      const user = await storeLogin(firstname, phone);
       return user;
     } catch (error) {
       throw new Error('Invalid credentials');
     }
   };
 
-  const register = async (name: string, email: string, password: string, role: 'owner' | 'client'): Promise<User> => {
+  const register = async (name: string, email: string, phone: string, role: Role): Promise<User> => {
     try {
-      // Create the user
-      const newUser = await addUser({ name, email, password, role });
-      
-      // Automatically log them in
+      const newUser = await RegisterUser({ name, email, phone, role });
+
       setCurrentUser(newUser);
-      
+
       return newUser;
     } catch (error) {
       throw new Error('Registration failed');
