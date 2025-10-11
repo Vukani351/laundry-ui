@@ -2,8 +2,14 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  password: string;
+  // password: string;
+  phone: string; // todo: turn this to not be optional
   role: 'owner' | 'client';
+}
+
+export enum Role {
+  OWNER = 'owner',
+  CLIENT = 'client'
 }
 
 export interface LaundryItem {
@@ -18,6 +24,12 @@ export interface LaundryItem {
   dateCreated: Date;
   dateCompleted?: Date;
   price: number;
+}
+
+export interface laundryStore {
+  isLoading: boolean;
+  laundries: LaundryItem[];
+  fetchUserDataByNumber: (phone: string) => Promise<User | null>;
 }
 
 export type LaundryStatus = 'washing' | 'drying' | 'ready' | 'not started';

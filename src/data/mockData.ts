@@ -1,4 +1,4 @@
-import { LaundryItem } from '@/types/laundry';
+import { LaundryItem } from '@/types/models';
 
 export const mockLaundryItems: LaundryItem[] = [
   {

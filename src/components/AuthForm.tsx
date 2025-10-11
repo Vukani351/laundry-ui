@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAuth } from '@/hooks/useAuth';
@@ -14,14 +14,12 @@ export const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
 
-  // Login form state
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [loginFullName, setLoginFullName] = useState('');
+  const [loginPhone, setLoginPhone] = useState('');
 
-  // Register form state
   const [registerName, setRegisterName] = useState('');
+  const [registerPhone, setRegisterPhone] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
   const [registerRole, setRegisterRole] = useState<'owner' | 'client'>('client');
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -29,7 +27,7 @@ export const AuthForm = () => {
     setIsLoading(true);
 
     try {
-      await login(loginEmail, loginPassword);
+      await login(loginFullName, loginPhone);
       toast({
         title: "Welcome back!",
         description: "You have successfully logged in.",
@@ -37,7 +35,7 @@ export const AuthForm = () => {
     } catch (error) {
       toast({
         title: "Login failed",
-        description: "Invalid email or password. Try owner@laundry.com / client@laundry.com with password 'password'",
+        description: "Invalid phone or password. Try owner@laundry.com / client@laundry.com with password 'password'",
         variant: "destructive",
       });
     } finally {
@@ -50,7 +48,7 @@ export const AuthForm = () => {
     setIsLoading(true);
 
     try {
-      await register(registerName, registerEmail, registerPassword, registerRole);
+      await register(registerName, registerEmail, registerPhone, registerRole);
       toast({
         title: "Account created!",
         description: "Your account has been successfully created.",
@@ -91,24 +89,24 @@ export const AuthForm = () => {
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="login-email">Email</Label>
+                      <Label htmlFor="login-name">Full Name</Label>
                       <Input
-                        id="login-email"
-                        type="email"
-                        placeholder="owner@laundry.com or client@laundry.com"
-                        value={loginEmail}
-                        onChange={(e) => setLoginEmail(e.target.value)}
+                        id="login-name"
+                        type="name"
+                        placeholder="Joe Mendez"
+                        value={loginFullName}
+                        onChange={(e) => setLoginFullName(e.target.value)}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="login-password">Password</Label>
+                      <Label htmlFor="login-phone">Phone</Label>
                       <Input
-                        id="login-password"
-                        type="password"
-                        placeholder="password"
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}
+                        id="login-phone"
+                        type="phone"
+                        placeholder="phone"
+                        value={loginPhone}
+                        onChange={(e) => setLoginPhone(e.target.value)}
                         required
                       />
                     </div>
@@ -139,24 +137,24 @@ export const AuthForm = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="register-email">Email</Label>
+                      <Label htmlFor="register-phone">Phone Number</Label>
                       <Input
-                        id="register-email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={registerEmail}
-                        onChange={(e) => setRegisterEmail(e.target.value)}
+                        id="register-phone"
+                        type="phone"
+                        placeholder="Enter your phone"
+                        value={registerPhone}
+                        onChange={(e) => setRegisterPhone(e.target.value)}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="register-password">Password</Label>
+                      <Label htmlFor="register-email">Email</Label>
                       <Input
-                        id="register-password"
-                        type="password"
-                        placeholder="Create a password"
-                        value={registerPassword}
-                        onChange={(e) => setRegisterPassword(e.target.value)}
+                        id="register-email"
+                        type="email"
+                        placeholder="Create a emial"
+                        value={registerEmail}
+                        onChange={(e) => setRegisterEmail(e.target.value)}
                         required
                       />
                     </div>
