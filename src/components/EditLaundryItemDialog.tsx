@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LaundryItem, LaundryStatus } from '@/types/laundry';
+import { LaundryItem, LaundryStatus } from '@/types/models';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,7 @@ interface EditLaundryItemDialogProps {
   isNew?: Boolean;
   isLoading?: boolean;
   trigger: React.ReactNode;
-  onVerifyPhoneNumber: (userNumber: string) => any; // change this to be user details
+  onVerifyPhoneNumber?: (userNumber: string) => any; // change this to be user details
   onSave: (updatedItem: LaundryItem) => void;
 }
 
