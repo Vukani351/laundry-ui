@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LaundryItem, LaundryStatus } from '@/types/laundry';
+import { LaundryItem, LaundryStatus } from '@/types/models';
 import { LaundryCard } from './LaundryCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

@@ -1,16 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { LaundryItem, User } from '@/types/laundry';
+import { laundryStore, User } from '@/types/models';
 import axios from 'axios';
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}/users`;
-
-interface laundryStore {
-  isLoading: boolean;
-  // laundryItemOwner: User;
-  laundries: LaundryItem[];
-  fetchUserDataByNumber: (phone: string) => Promise<User | null>;
-}
 
 export const useLaundryStore = create<laundryStore>()(
   persist(
