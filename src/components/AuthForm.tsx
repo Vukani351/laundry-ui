@@ -28,9 +28,9 @@ export const AuthForm = () => {
     setIsLoading(true);
 
     try {
-      const username = (await login(loginFullName, loginPhone))?.username;
+      const firstName = (await login(loginFullName, loginPhone))?.firstName;
       toast({
-        title: `Welcome back! ${username}`,
+        title: `Welcome back! ${firstName}`,
         description: "You have successfully logged in.",
       });
     } catch (error) {
@@ -50,6 +50,7 @@ export const AuthForm = () => {
 
     try {
       await register(registerName, registerEmail, registerPhone, registerRole);
+      console.log("Registered user: ", { registerName, registerEmail, registerPhone, registerRole });
       toast({
         title: "Account created!",
         description: "Your account has been successfully created.",

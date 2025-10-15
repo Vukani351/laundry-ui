@@ -1,6 +1,6 @@
 export interface User {
   id: string;
-  username: string;
+  firstName: string;
   email: string;
   address?: string;
   phone: string; // todo: turn this to not be optional

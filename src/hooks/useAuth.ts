@@ -21,9 +21,9 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (username: string, email: string, phone: string, role: Role): Promise<User> => {
+  const register = async (firstName: string, email: string, phone: string, role: Role): Promise<User> => {
     try {
-      const newUser = await RegisterUser({ username, email, phone, role });
+      const newUser = await RegisterUser({ firstName, email, phone, role });
 
       setCurrentUser(newUser);
 

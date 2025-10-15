@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User } from '@/types/models';
+import { Role, User } from '@/types/models';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'
 
@@ -25,39 +25,25 @@ export const useUserStore = create<UserStore>()(
       isLoading: false,
 
       RegisterUser: async (userData) => {
-        // const { users } = get();
-        // const newUser = {
-        //   ...userData,
-        //   id: Date.now().toString()
-        // };
-        console.log("user Data: ", userData);
-        return await axios.post(`${BASE_URL}/create`, { ...userData }).then(response => {
-          console.log("response data: ", response);
-          return response.data as User;
+        return await axios.post(`${BASE_URL}/create`, {
+          ...userData,
+          role_id: userData.role == Role.CLIENT ? 1 : 0
+        }).then(response => {
+          set({ currentUser: jwtDecode(response.data.access_token) as User });
         }).catch(err => {
           console.error(err);
           return null;
         });
-
-        // const updatedUsers = [...users, newUser];
-        // set({ users: updatedUsers });
-
-        // In a real app, you'd save to the JSON file here
-        // For now, we'll just persist in localStorage via zustand
-
-        // return newUser;
       },
 
       login: async (firstname: string, phone: string) => {
         return await axios.post(`${BASE_URL}/login`,
           {
-            "firstname": "sfiso",
-            "phone": 1234567
+            firstname: firstname,
+            phone: phone
           }
         ).then(response => {
-          console.log("response data: ", response);
-          const decoded = jwtDecode(response.data.access_token);
-          set({ currentUser: decoded as User });
+          set({ currentUser: jwtDecode(response.data.access_token) as User });
         }).catch(err => {
           throw new Error(err);
         });
