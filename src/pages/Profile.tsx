@@ -130,15 +130,15 @@ const Profile = () => {
 
       <div className="max-w-4xl mx-auto p-6">
         <Tabs defaultValue="general" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="general" className="flex items-center gap-2">
               <UserIcon className="w-4 h-4" />
               General
             </TabsTrigger>
-            <TabsTrigger value="security" className="flex items-center gap-2">
+            {/* <TabsTrigger value="security" className="flex items-center gap-2">
               <Shield className="w-4 h-4" />
               Security
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger value="activity" className="flex items-center gap-2">
               <Activity className="w-4 h-4" />
               Activity
@@ -154,11 +154,11 @@ const Profile = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
                   <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
-                    {editedUser.name.charAt(0).toUpperCase()}
+                    {editedUser.firstName.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">{editedUser.name}</h3>
-                    <p className="text-muted-foreground">{editedUser.email}</p>
+                    <h3 className="font-semibold text-lg">{editedUser.firstName}</h3>
+                    <p className="text-muted-foreground">{editedUser.phone}</p>
                     <Badge variant={editedUser.role === 'owner' ? 'default' : 'secondary'}>
                       {editedUser.role === 'owner' ? 'Business Owner' : 'Client'}
                     </Badge>
@@ -170,17 +170,17 @@ const Profile = () => {
                     <Label htmlFor="name">Full Name</Label>
                     <Input
                       id="name"
-                      value={editedUser.name}
-                      onChange={(e) => updateUserField('name', e.target.value)}
+                      value={editedUser.firstName}
+                      onChange={(e) => updateUserField('firstName', e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="phone">Phone Number</Label>
                     <Input
-                      id="email"
-                      type="email"
-                      value={editedUser.email}
-                      onChange={(e) => updateUserField('email', e.target.value)}
+                      id="phone"
+                      type="number"
+                      value={editedUser.phone}
+                      onChange={(e) => updateUserField('phone', e.target.value)}
                     />
                   </div>
                 </div>
@@ -202,7 +202,7 @@ const Profile = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="security" className="space-y-6">
+          {/* <TabsContent value="security" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Change Password</CardTitle>
@@ -265,7 +265,7 @@ const Profile = () => {
                 </Button>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
 
           <TabsContent value="activity" className="space-y-6">
             <Card>
