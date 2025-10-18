@@ -4,9 +4,13 @@ import { OwnerDashboard } from '@/components/OwnerDashboard';
 import { ClientDashboard } from '@/components/ClientDashboard';
 import { Loader2, Droplets } from 'lucide-react';
 import { Role } from '@/types/models';
+import { useLaundryStore } from '@/hooks/useLaundryStore';
+import { useEffect } from 'react';
 
 const Index = () => {
   const { user, isLoading } = useAuth();
+  const { fetchLaundromatDetails } = useLaundryStore();
+
 
   if (isLoading) {
     return (
@@ -27,6 +31,13 @@ const Index = () => {
   if (!user) {
     return <AuthForm />;
   }
+
+  useEffect(() => {
+    (async () => {
+      console.log("Calling...")
+      await fetchLaundromatDetails(+user.id)
+    })();
+  }, []);
 
   return user.role_id === Role.OWNER ? <OwnerDashboard /> : <ClientDashboard />;
 };

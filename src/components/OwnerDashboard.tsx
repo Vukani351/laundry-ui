@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LaundryItem, LaundryStatus } from '@/types/models';
 import { LaundryCard } from './LaundryCard';
 import { Button } from '@/components/ui/button';
@@ -19,8 +19,10 @@ export const OwnerDashboard = () => {
   const [laundryItems, setLaundryItems] = useState<LaundryItem[]>(mockLaundryItems);
   const {
     currentLaundry,
+    laundromat,
     isLoading,
-    fetchUserDataByNumber
+    fetchUserDataByNumber,
+    fetchLaundryOrders,
   } = useLaundryStore();
 
   const handleStatusChange = (itemId: string, status: LaundryStatus) => {
@@ -81,7 +83,12 @@ export const OwnerDashboard = () => {
     if (!userData) return;
     return userData.firstName;
   }
-  console.log({ currentLaundry, user })
+
+  useEffect(() => {
+    (async () => {
+      const laundryOrders = await fetchLaundryOrders();
+    })()
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">

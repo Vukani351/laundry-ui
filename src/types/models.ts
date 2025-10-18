@@ -36,6 +36,8 @@ export interface laundryStore {
   isLoading: boolean;
   laundromat: Laundromat;
   currentLaundry: LaundryItem[];
+  fetchLaundromatDetails: (user_id: number) => Promise<Laundromat | null>
+  fetchLaundryOrders: () => Promise<LaundryItem[] | null>
   fetchUserDataByNumber: (phone: string) => Promise<User | null>;
 }
 
