@@ -27,7 +27,7 @@ export const useUserStore = create<UserStore>()(
       RegisterUser: async (userData) => {
         return await axios.post(`${BASE_URL}/create`, {
           ...userData,
-          role_id: userData.role == Role.CLIENT ? 1 : 0
+          role_id: userData.role_id == Role.CLIENT ? 1 : 0
         }).then(response => {
           set({ currentUser: jwtDecode(response.data.access_token) as User });
         }).catch(err => {

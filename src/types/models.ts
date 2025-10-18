@@ -4,12 +4,18 @@ export interface User {
   email: string;
   address?: string;
   phone: string; // todo: turn this to not be optional
-  role: 'owner' | 'client';
+  role_id: Role.OWNER | Role.CLIENT;
 }
 
 export enum Role {
-  OWNER = 'owner',
-  CLIENT = 'client'
+  OWNER = 0,
+  CLIENT = 1
+}
+
+export interface Laundromat {
+  id: string;
+  name: string;
+  address?: string;
 }
 
 export interface LaundryItem {
@@ -28,7 +34,8 @@ export interface LaundryItem {
 
 export interface laundryStore {
   isLoading: boolean;
-  laundries: LaundryItem[];
+  laundromat: Laundromat;
+  currentLaundry: LaundryItem[];
   fetchUserDataByNumber: (phone: string) => Promise<User | null>;
 }
 

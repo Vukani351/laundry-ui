@@ -18,7 +18,7 @@ export const OwnerDashboard = () => {
   const navigate = useNavigate();
   const [laundryItems, setLaundryItems] = useState<LaundryItem[]>(mockLaundryItems);
   const {
-    laundries,
+    currentLaundry,
     isLoading,
     fetchUserDataByNumber
   } = useLaundryStore();
@@ -79,8 +79,9 @@ export const OwnerDashboard = () => {
   async function verifyUserPhone(phoneNumber: string): Promise<string> {
     const userData = await fetchUserDataByNumber(phoneNumber);
     if (!userData) return;
-    return userData.name;
+    return userData.firstName;
   }
+  console.log({ currentLaundry, user })
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,7 +89,7 @@ export const OwnerDashboard = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Owner Dashboard</h1>
-            <p className="text-white/80 mt-1">Welcome back, {user?.name}</p>
+            <p className="text-white/80 mt-1">Welcome back, {user?.firstName}</p>
           </div>
           <div className="flex items-center gap-2">
             <Button

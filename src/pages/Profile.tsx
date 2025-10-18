@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { User } from '@/types/models';
+import { Role, User } from '@/types/models';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -159,8 +159,8 @@ const Profile = () => {
                   <div>
                     <h3 className="font-semibold text-lg">{editedUser.firstName}</h3>
                     <p className="text-muted-foreground">{editedUser.phone}</p>
-                    <Badge variant={editedUser.role === 'owner' ? 'default' : 'secondary'}>
-                      {editedUser.role === 'owner' ? 'Business Owner' : 'Client'}
+                    <Badge variant={editedUser.role_id === Role.CLIENT ? 'default' : 'secondary'}>
+                      {editedUser.role_id === Role.CLIENT ? 'Business Owner' : 'Client'}
                     </Badge>
                   </div>
                 </div>
@@ -188,11 +188,11 @@ const Profile = () => {
                 <div className="space-y-2">
                   <Label>Account Type</Label>
                   <div className="p-3 bg-muted rounded-md">
-                    <Badge variant={editedUser.role === 'owner' ? 'default' : 'secondary'} className="text-sm">
-                      {editedUser.role === 'owner' ? 'Business Owner' : 'Client Account'}
+                    <Badge variant={editedUser.role_id === Role.OWNER ? 'default' : 'secondary'} className="text-sm">
+                      {editedUser.role_id === Role.OWNER ? 'Business Owner' : 'Client Account'}
                     </Badge>
                     <p className="text-sm text-muted-foreground mt-2">
-                      {editedUser.role === 'owner'
+                      {editedUser.role_id == Role.OWNER
                         ? 'You have full access to manage the laundry business.'
                         : 'You can track your laundry orders and make payments.'}
                     </p>

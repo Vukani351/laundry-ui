@@ -3,6 +3,7 @@ import { AuthForm } from '@/components/AuthForm';
 import { OwnerDashboard } from '@/components/OwnerDashboard';
 import { ClientDashboard } from '@/components/ClientDashboard';
 import { Loader2, Droplets } from 'lucide-react';
+import { Role } from '@/types/models';
 
 const Index = () => {
   const { user, isLoading } = useAuth();
@@ -27,7 +28,7 @@ const Index = () => {
     return <AuthForm />;
   }
 
-  return user.role === 'owner' ? <OwnerDashboard /> : <ClientDashboard />;
+  return user.role_id === Role.OWNER ? <OwnerDashboard /> : <ClientDashboard />;
 };
 
 export default Index;
