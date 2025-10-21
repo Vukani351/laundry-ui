@@ -34,7 +34,6 @@ const Index = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("Calling...")
       await fetchLaundromatDetails(+user.id)
     })();
   }, []);

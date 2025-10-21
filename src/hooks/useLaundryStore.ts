@@ -29,6 +29,7 @@ export const useLaundryStore = create<laundryStore>()(
         set({ isLoading: true });
         try {
           return await axios.get(`${BASE_URL}/laundry/laundromat/${get().laundromat.id}`).then(resp => {
+            set({ currentLaundry: resp.data.laundry })
             return { ...resp.data, name: resp.data.username };
           });
         } catch (error) {
@@ -58,7 +59,7 @@ export const useLaundryStore = create<laundryStore>()(
         try {
           // get user data so we have a user id...
           return await axios.get(`${BASE_URL}/laundromat/owner/${user_id}`).then(resp => {
-            set({ laundromat: resp.data.laundromat })
+            set({ laundromat: resp.data.laundromat });
             return resp.data.laundromat;
           });
         } catch (error) {
