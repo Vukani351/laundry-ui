@@ -64,7 +64,6 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
     }
   }, []);
 
-  console.log("Form data: ", formData, item)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

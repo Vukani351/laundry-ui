@@ -90,7 +90,6 @@ export const OwnerDashboard = () => {
     })();
   }, [])
 
-  // console.log("data: ", { laundromat, laundries })
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-gradient-primary text-white p-6 shadow-soft">
