@@ -63,6 +63,8 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
       setModelTitle("New Laundry Item")
     }
   }, []);
+
+  console.log("Form data: ", formData, item)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -120,14 +122,16 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
             <Label htmlFor="status" className="text-right">
               Status
             </Label>
-            <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value as LaundryStatus })}>
+            <Select value={formData.status}
+              onValueChange={(value) => setFormData({ ...formData, status: value as LaundryStatus })}>
               <SelectTrigger className="col-span-3">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="washing">Washing</SelectItem>
-                <SelectItem value="drying">Drying</SelectItem>
-                <SelectItem value="ready">Ready</SelectItem>
+                <SelectItem value={LaundryStatus.NOT_STARTED}>{LaundryStatus.NOT_STARTED}</SelectItem>
+                <SelectItem value={LaundryStatus.WASHING}>{LaundryStatus.WASHING}</SelectItem>
+                <SelectItem value={LaundryStatus.DRYING}>{LaundryStatus.DRYING}</SelectItem>
+                <SelectItem value={LaundryStatus.READY}>{LaundryStatus.READY}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -172,7 +176,7 @@ export const EditLaundryItemDialog = ({ item, onSave, onVerifyPhoneNumber, trigg
                 onCheckedChange={(checked) => setFormData({ ...formData, isPaid: checked })}
               />
               <Label htmlFor="isPaid" className="text-sm">
-                {formData.isPaid ? 'Paid' : 'Unpaid'}
+                {formData.isPaid ? 'isPaid' : 'Unpaid'}
               </Label>
             </div>
           </div>

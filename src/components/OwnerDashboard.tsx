@@ -18,7 +18,7 @@ export const OwnerDashboard = () => {
   const navigate = useNavigate();
   const [laundryItems, setLaundryItems] = useState<LaundryItem[]>(mockLaundryItems);
   const {
-    currentLaundry,
+    laundries,
     laundromat,
     isLoading,
     fetchUserDataByNumber,
@@ -45,7 +45,7 @@ export const OwnerDashboard = () => {
   const completedItems = laundryItems.filter(item => item.status === 'ready' && item.isPaid);
 
   const todayRevenue = laundryItems
-    .filter(item => item.isPaid && new Date(item.dateCreated).toDateString() === new Date().toDateString())
+    .filter(item => item.isPaid && new Date(item.created_at).toDateString() === new Date().toDateString())
     .reduce((sum, item) => sum + item.price, 0);
 
   const washingCount = laundryItems.filter(item => item.status === 'washing').length;
@@ -56,13 +56,13 @@ export const OwnerDashboard = () => {
     id: "",
     weight: 0,
     adminId: "",
-    clientId: "",
+    owner_id: "",
     isPaid: false,
     price: 0,
     clientName: "new user",
     clientNumber: "",
-    status: "not started",
-    dateCreated: new Date(),
+    status: LaundryStatus.NOT_STARTED,
+    created_at: new Date(),
   }
 
   const newLaundryItem = (
@@ -86,10 +86,11 @@ export const OwnerDashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const laundryOrders = await fetchLaundryOrders();
-    })()
+      await fetchLaundryOrders()
+    })();
   }, [])
 
+  // console.log("data: ", { laundromat, laundries })
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-gradient-primary text-white p-6 shadow-soft">
@@ -207,7 +208,7 @@ export const OwnerDashboard = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {activeItems.map((item) => (
+                    {laundries.map((item) => (
                       <LaundryCard
                         key={item.id}
                         item={item}
@@ -227,7 +228,7 @@ export const OwnerDashboard = () => {
               <CardHeader>
                 <CardTitle>Completed Orders</CardTitle>
                 <CardDescription>
-                  View completed and paid laundry orders
+                  View completed and isPaid laundry orders
                 </CardDescription>
               </CardHeader>
               <CardContent>

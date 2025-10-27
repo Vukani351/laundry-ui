@@ -7,11 +7,6 @@ export interface User {
   role_id: Role.OWNER | Role.CLIENT;
 }
 
-export enum Role {
-  OWNER = 0,
-  CLIENT = 1
-}
-
 export interface Laundromat {
   id: string;
   name: string;
@@ -20,25 +15,35 @@ export interface Laundromat {
 
 export interface LaundryItem {
   id: string;
-  clientId: string;
+  owner_id: string;
   adminId: string;
   clientName: string;
   clientNumber?: string;
   weight: number;
-  status: 'washing' | 'drying' | 'ready' | 'not started';
+  status: LaundryStatus;
   isPaid: boolean;
-  dateCreated: Date;
+  created_at: Date;
   dateCompleted?: Date;
   price: number;
 }
 
 export interface laundryStore {
   isLoading: boolean;
+  laundries: LaundryItem[];
   laundromat: Laundromat;
-  currentLaundry: LaundryItem[];
   fetchLaundromatDetails: (user_id: number) => Promise<Laundromat | null>
   fetchLaundryOrders: () => Promise<LaundryItem[] | null>
   fetchUserDataByNumber: (phone: string) => Promise<User | null>;
 }
 
-export type LaundryStatus = 'washing' | 'drying' | 'ready' | 'not started';
+export enum LaundryStatus {
+  WASHING = 'washing',
+  DRYING = 'drying',
+  READY = 'ready',
+  NOT_STARTED = 'not started'
+}
+
+export enum Role {
+  OWNER = 0,
+  CLIENT = 1
+}

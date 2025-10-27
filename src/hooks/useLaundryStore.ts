@@ -10,7 +10,7 @@ export const useLaundryStore = create<laundryStore>()(
     (set, get) => ({
       isLoading: false,
       laundromat: null,
-      currentLaundry: [],
+      laundries: [],
 
       fetchUserDataByNumber: async (phone: string): Promise<User | null> => {
         set({ isLoading: true });
@@ -29,7 +29,7 @@ export const useLaundryStore = create<laundryStore>()(
         set({ isLoading: true });
         try {
           return await axios.get(`${BASE_URL}/laundry/laundromat/${get().laundromat.id}`).then(resp => {
-            set({ currentLaundry: resp.data.laundry })
+            set({ laundries: resp.data.laundry })
             return { ...resp.data, name: resp.data.username };
           });
         } catch (error) {
@@ -75,7 +75,7 @@ export const useLaundryStore = create<laundryStore>()(
       partialize: (state) => ({
         isLoading: state.isLoading,
         laundromat: state.laundromat,
-        currentLaundry: state.currentLaundry
+        laundries: state.laundries
       })
     })
 );

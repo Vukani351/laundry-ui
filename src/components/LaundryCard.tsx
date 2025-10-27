@@ -28,12 +28,12 @@ const getStatusColor = (status: LaundryStatus) => {
 
 const getStatusText = (status: LaundryStatus) => {
   switch (status) {
-    case 'washing':
-      return 'Washing';
-    case 'drying':
-      return 'Drying';
-    case 'ready':
-      return 'Ready';
+    case LaundryStatus.WASHING:
+      return LaundryStatus.WASHING.toLocaleUpperCase();
+    case LaundryStatus.DRYING:
+      return LaundryStatus.DRYING.toLocaleUpperCase();
+    case LaundryStatus.READY:
+      return LaundryStatus.READY.toLocaleUpperCase();
   }
 };
 
@@ -44,6 +44,7 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold flex items-center gap-2">
             <User className="w-4 h-4 text-muted-foreground" />
+            {/* show the user number here not number */}
             {item.clientName}
           </CardTitle>
           <Badge className={getStatusColor(item.status)}>
@@ -60,13 +61,13 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <DollarSign className="w-4 h-4" />
-            <span>${item.price.toFixed(2)}</span>
+            <span>${item.price}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="w-4 h-4" />
-          <span>Started {formatDistanceToNow(item.dateCreated, { addSuffix: true })}</span>
+          <span>Started {formatDistanceToNow(item.created_at, { addSuffix: true })}</span>
         </div>
 
         <div className="flex items-center justify-between pt-2">
@@ -91,14 +92,15 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="washing">Washing</SelectItem>
-                <SelectItem value="drying">Drying</SelectItem>
-                <SelectItem value="ready">Ready</SelectItem>
+                <SelectItem value={LaundryStatus.NOT_STARTED}>{LaundryStatus.NOT_STARTED}</SelectItem>
+                <SelectItem value={LaundryStatus.WASHING}>{LaundryStatus.WASHING}</SelectItem>
+                <SelectItem value={LaundryStatus.DRYING}>{LaundryStatus.DRYING}</SelectItem>
+                <SelectItem value={LaundryStatus.READY}>{LaundryStatus.READY}</SelectItem>
               </SelectContent>
             </Select>
           )}
 
-          {userRole === 'client' && !item.isPaid && item.status === 'ready' && onPayment && (
+          {userRole === 'client' && !item.isPaid && item.status === LaundryStatus.READY && onPayment && (
             <Button
               size="sm"
               onClick={() => onPayment(item.id)}
