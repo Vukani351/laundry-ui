@@ -17,7 +17,7 @@ export interface LaundryItem {
   id: string;
   owner_id: string;
   adminId: string;
-  clientName: string;
+  clientName?: string;
   clientNumber?: string;
   weight: number;
   status: LaundryStatus;

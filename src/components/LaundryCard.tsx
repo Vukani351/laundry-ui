@@ -44,8 +44,7 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold flex items-center gap-2">
             <User className="w-4 h-4 text-muted-foreground" />
-            {/* show the user number here not number */}
-            {item.clientName}
+            {item.clientNumber}
           </CardTitle>
           <Badge className={getStatusColor(item.status)}>
             {getStatusText(item.status)}
