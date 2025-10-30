@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { User, Weight, Calendar, DollarSign, Clock } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { EditLaundryItemDialog } from './EditLaundryItemDialog';
+import { useLaundryStore } from '@/hooks/useLaundryStore';
 
 interface LaundryCardProps {
   item: LaundryItem;
@@ -15,29 +16,41 @@ interface LaundryCardProps {
   onEdit?: (updatedItem: LaundryItem) => void;
 }
 
-const getStatusColor = (status: LaundryStatus) => {
-  switch (status) {
-    case 'washing':
-      return 'bg-primary text-primary-foreground';
-    case 'drying':
-      return 'bg-warning text-warning-foreground';
-    case 'ready':
-      return 'bg-success text-success-foreground';
-  }
-};
-
-const getStatusText = (status: LaundryStatus) => {
-  switch (status) {
-    case LaundryStatus.WASHING:
-      return LaundryStatus.WASHING.toLocaleUpperCase();
-    case LaundryStatus.DRYING:
-      return LaundryStatus.DRYING.toLocaleUpperCase();
-    case LaundryStatus.READY:
-      return LaundryStatus.READY.toLocaleUpperCase();
-  }
-};
-
 export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit }: LaundryCardProps) => {
+  const {
+    isLoading,
+    fetchUserDataByNumber,
+  } = useLaundryStore();
+
+  const getStatusColor = (status: LaundryStatus) => {
+    switch (status) {
+      case 'washing':
+        return 'bg-primary text-primary-foreground';
+      case 'drying':
+        return 'bg-warning text-warning-foreground';
+      case 'ready':
+        return 'bg-success text-success-foreground';
+    }
+  };
+
+  const getStatusText = (status: LaundryStatus) => {
+    switch (status) {
+      case LaundryStatus.WASHING:
+        return LaundryStatus.WASHING.toLocaleUpperCase();
+      case LaundryStatus.DRYING:
+        return LaundryStatus.DRYING.toLocaleUpperCase();
+      case LaundryStatus.READY:
+        return LaundryStatus.READY.toLocaleUpperCase();
+    }
+  };
+
+  async function verifyUserPhone(phoneNumber: string): Promise<string> {
+    const userData = await fetchUserDataByNumber(phoneNumber);
+    if (!userData) return;
+    item.clientName = userData.firstName;
+    return userData.firstName;
+  }
+
   const cardContent = (
     <Card className="shadow-card hover:shadow-float transition-all duration-300 animate-fade-in cursor-pointer hover:scale-[1.02]">
       <CardHeader className="pb-3">
@@ -119,7 +132,7 @@ export const LaundryCard = ({ item, userRole, onStatusChange, onPayment, onEdit 
         item={item}
         onSave={onEdit}
         trigger={cardContent}
-      />
+        onVerifyPhoneNumber={verifyUserPhone} />
     );
   }
 

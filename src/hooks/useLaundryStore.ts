@@ -16,7 +16,7 @@ export const useLaundryStore = create<laundryStore>()(
         set({ isLoading: true });
         try {
           return await axios.get(`${BASE_URL}/users/phone/${phone}`).then(resp => {
-            return { ...resp.data, name: resp.data.username };
+            return { ...resp.data, firstName: resp.data.username };
           });
         } catch (error) {
           console.error("Error fetching user data:", error);
